@@ -16,7 +16,7 @@ class SmallSMILHandler(ContentHandler):
         """
         self.width = ""
         self.height = ""
-        self.background-color = ""
+        self.background_color = ""
         self.id = ""
         self.top = ""
         self.bottom = ""
@@ -40,7 +40,7 @@ class SmallSMILHandler(ContentHandler):
             # De esta manera tomamos los valores de los atributos
             self.widht = attrs.get('widht',"")
             self.height = attrs.get('height',"")
-            self.backgound-color = attrs.get('background-color',"")            
+            self.background_color = attrs.get('background-color',"")            
         elif name == 'region':
             self.id = attrs.get('id',"")
             self.top = attrs.get('top',"")
@@ -65,53 +65,57 @@ class SmallSMILHandler(ContentHandler):
         """
         if name == 'root_layout':            
             if self.width:
-                self.width = self.width += char
+                self.width = self.width + char
             if self.height:
-                self.height = self.height += char
+                self.height = self.height + char
             if self.background-color:
-                self.background-color = self.background-color += char
-        root_layout=['width','height','background-color']
+                self.background_color = self.background_color + char
+        ###root_layout=['width','height','background-color']
         if name == 'region':
             if self.id:
-                self.id= self.id += char
+                self.id= self.id + char
             if self.top:
-                self.top = self.top += char
+                self.top = self.top + char
             if self.bottom:
-                self.bottom= self.bottom += char
+                self.bottom= self.bottom + char
             if self.left:
-                self.left = self.left += char
+                self.left = self.left + char
             if self.right:
-                self.right= self.right += char
-        region=['id','top','bottom','left','rigth']
+                self.right= self.right + char
+        ###region=['id','top','bottom','left','rigth']
         if name == 'img':
             if self.src:
-                self.src = self.src += char
+                self.src = self.src + char
             if self.region:
-                self.region=self.region += char
+                self.region=self.region + char
             if self.begin:
-                self.begin = self.begin += char
+                self.begin = self.begin + char
             if self.dur:
-                self.dur= self.dur += char
-        img=['src','region','begin','dur']
+                self.dur= self.dur + char
+        ###img=['src','region','begin','dur']
         if name == 'audio':
             if self.src:
-                self.src = self.src += char 
+                self.src = self.src + char 
             if self.begin:
-                self.begin = self.begin += char
+                self.begin = self.begin + char
             if self.dur:
-                self.dur= self.dur += char
-        audio=['src','begin','dur']
+                self.dur= self.dur + char
+        ###audio=['src','begin','dur']
         if name == 'texstream':
             if self.src:
-                self.src = self.src += char
+                self.src = self.src + char
             if self.region:
-                self.region=self.region += char
-        texstream = ['src','region']
-  
+                self.region=self.region + char
+        ###texstream = ['src','region']
+        misdatos ={'root_layout': ['width','height','background-color'], 
+'region': ['id','top','bottom','left','rigth'], 'img': 
+['src','region','begin','dur'], 'audio': ['src','begin','dur'], 
+'textstream': ['src','region'],}
     def get_tags(self):
         """
         Metodo para guardar los contenidos del texto e imprimirlos por pantalla
         """
-        #Creamos un array que contenga los datos y los guarde.
+        #Creamos un array que contenga los datos y los guarde.(metodo anterior)
         return self.misdatos
         # y luego los imprime.
+        print (self.misdatos)
