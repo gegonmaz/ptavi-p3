@@ -4,7 +4,7 @@
 from xml.sax import make_parser
 from xml.sax.handler import ContentHandler
 
-from smallsmilhandler.py import SAMLLSmilHandler
+from smallsmilhandler import SmallSMILHandler
 import sys
 import csv
 
@@ -29,8 +29,10 @@ if __name__ == "__main__":
         que especificar el fichero, asi que tendra que saltar un mensaje de
         error --> "Usege: python3 karaoke.py file.smil".
         """
-    except KeyError:
-        return Usege: python3 karaoke.py file.smil
+    except IndexError:
+        sys.exit("Usege: python3 karaoke.py file.smil")
+        #return 'Usege: python3 karaoke.py file.smil'
+
     parser = make_parser()
     sHandler = SmallSMILHandler()
     parser.setContentHandler(cHandler)
