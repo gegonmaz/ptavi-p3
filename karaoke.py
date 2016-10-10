@@ -35,8 +35,8 @@ if __name__ == "__main__":
 
     parser = make_parser()
     sHandler = SmallSMILHandler()
-    parser.setContentHandler(cHandler)
+    parser.setContentHandler(sHandler)
     parser.parse(open(Archivo)) #tendrá que abrir cualquier archivo
 
-    cHandler.get_tags()
+    sHandler.get_tags()
     # hago cosas con mis datos (los imprimo por pantalla, mediante el metodo)
