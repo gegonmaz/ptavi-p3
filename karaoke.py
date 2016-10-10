@@ -20,7 +20,16 @@ def lista_etiquetas(misdatos):
             if atributos[clave]:
                   resultado = resultado + (str(clave + '="' + atributos[clave] 
 + '"' + '\n'))
-        print(resultado)    
+        print(resultado)
+def to_json(My_List, fich_name=""):
+
+    if not fich_name:
+        fich_name = "local.json"
+    else:
+        fich_name = fich_name.replace(".smil", ".json")
+    with open(fich_name, 'w') as archivo_json:
+        json.dump(My_List, archivo_json, indent=4,
+                  separators=(' ', ': '), sort_keys=True)    
 
 if __name__ == "__main__":
 
@@ -55,5 +64,8 @@ if __name__ == "__main__":
     parser.setContentHandler(sHandler)
     parser.parse(Archivo)
     sHandler.get_tags()
+    My_List = sHandler.get_tags()
+    List = lista_etiquetas(My_List)
+    to_json(My_List, fich.name)
     
     
