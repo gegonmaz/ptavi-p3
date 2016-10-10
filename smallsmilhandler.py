@@ -91,9 +91,9 @@ if __name__ == "__main__":
     Programa principal
     """
     parser = make_parser()
-    cHandler = SmallSMILHandler()
-    parser.setContentHandler(cHandler)
+    sHandler = SmallSMILHandler()
+    parser.setContentHandler(sHandler)
     parser.parse(open('karaoke.smil'))
 
-    cHandler.get_tags()
-    # hago cosas con mis datos
+    sHandler.get_tags()
+    # hago cosas con mis datos(imprimo por pantalla con el metodo get_tags)
