@@ -11,24 +11,24 @@ import json
 
 
 def lista_etiquetas(misdatos):
-   
-    for sublista in misdatos:
-        etiquetas = sublista[0]
-        atributos = sublista[1]
-        resultado = str(etiquetas + '\t')        
-        for clave in atributos:
-            if atributos[clave]:
-                  resultado = resultado + (str(clave + '="' + atributos[clave] 
-+ '"' + '\n'))
-        print(resultado)
-def to_json(My_List, fich_name=""):
+    
+    listado = ""
+    for diccs in misdatos:
+        atrib_line = ""
+    for key in diccs.keys():
+        if key != "name" and diccs[key] != "":
+           atrib_line = atrib_line + key + "=" + diccs[key] + "\t"
+           listado = listado + diccs["name"] + "\t" + atrib_line + "\n"
+    return listado 
 
-    if not fich_name:
-        fich_name = "local.json"
+def to_json(ListaDatos, nombreArchivo=""):
+
+    if not nombreArchivo:
+        nombreArchivo = "local.json"
     else:
-        fich_name = fich_name.replace(".smil", ".json")
+        nombreArchivo = nombreArchivo.replace(".smil", ".json")
     with open(fich_name, 'w') as archivo_json:
-        json.dump(My_List, archivo_json, indent=4,
+        json.dump(ListaDatos, archivo_json, indent=4,
                   separators=(' ', ': '), sort_keys=True)    
 
 if __name__ == "__main__":
@@ -57,15 +57,16 @@ if __name__ == "__main__":
         """
     except IndexError:
         sys.exit("Usege: python3 karaoke.py file.smil")
-        #return 'Usege: python3 karaoke.py file.smil'   
- 
+        #return 'Usege: python3 karaoke.py file.smil' 
     parser = make_parser()
-    sHandler =SmallSMILHandler()
-    parser.setContentHandler(sHandler)
+    ssHandler = SmallSMILHandler()
+    parser.setContentHandler(ssHandler)
     parser.parse(Archivo)
-    sHandler.get_tags()
-    My_List = sHandler.get_tags()
-    List = lista_etiquetas(My_List)
-    to_json(My_List, fich.name)
+  
+    tags = ssHandler.get_tags()
+    print(tags)
+    result = lista_etiquetas(misdatos)
+    print(result)  
     
+
     
