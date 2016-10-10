@@ -59,3 +59,59 @@ class SmallSMILHandler(ContentHandler):
             self.src = attrs.get('src',"")
             self.region = attrs.get('region',"")
 
+    def characters(self, char):
+        """
+        Método para tomar contenido de la etiqueta
+        """
+        if name == 'root_layout':            
+            if self.width:
+                self.width = self.width += char
+            if self.height:
+                self.height = self.height += char
+            if self.background-color:
+                self.background-color = self.background-color += char
+        root_layout=['width','height','background-color']
+        if name == 'region':
+            if self.id:
+                self.id= self.id += char
+            if self.top:
+                self.top = self.top += char
+            if self.bottom:
+                self.bottom= self.bottom += char
+            if self.left:
+                self.left = self.left += char
+            if self.right:
+                self.right= self.right += char
+        region=['id','top','bottom','left','rigth']
+        if name == 'img':
+            if self.src:
+                self.src = self.src += char
+            if self.region:
+                self.region=self.region += char
+            if self.begin:
+                self.begin = self.begin += char
+            if self.dur:
+                self.dur= self.dur += char
+        img=['src','region','begin','dur']
+        if name == 'audio':
+            if self.src:
+                self.src = self.src += char 
+            if self.begin:
+                self.begin = self.begin += char
+            if self.dur:
+                self.dur= self.dur += char
+        audio=['src','begin','dur']
+        if name == 'texstream':
+            if self.src:
+                self.src = self.src += char
+            if self.region:
+                self.region=self.region += char
+        texstream = ['src','region']
+  
+    def get_tags(self):
+        """
+        Metodo para guardar los contenidos del texto e imprimirlos por pantalla
+        """
+        #Creamos un array que contenga los datos y los guarde.
+        return self.misdatos
+        # y luego los imprime.
