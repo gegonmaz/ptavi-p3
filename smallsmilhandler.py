@@ -26,7 +26,7 @@ class SmallSMILHandler(ContentHandler):
         self.region = ""
         self.begin =""
         self.dur = ""
-
+        self.misdatos=[]
         """
         No crearemos etiquetas de flag, porque el SMIL, no tiene informacion
         en los atributos
@@ -36,86 +36,64 @@ class SmallSMILHandler(ContentHandler):
         """
         Método que se llama cuando se abre una etiqueta
         """
-        if name == 'root_layout':
+        if name == 'root-layout':
+            self.root_layout = {}
+            self.misdatos.append(name)
             # De esta manera tomamos los valores de los atributos
             self.widht = attrs.get('widht',"")
             self.height = attrs.get('height',"")
-            self.background_color = attrs.get('background-color',"")            
+            self.background_color = attrs.get('background-color',"") 
+            self.root_layout=[self.width,self.height,self.background_color]
+            self.misdatos.append(self.root_layout)           
         elif name == 'region':
+            self.misdatos.append(name)
             self.id = attrs.get('id',"")
             self.top = attrs.get('top',"")
             self.bottoms = attrs.get('bottoms',"")  
             self.left = attrs.get('left',"")
             self.right = attrs.get('right',"")
+            self.region=[self.id,self.top,self.bottom,self.left,self.right]
+            self.misdatos.append(self.region)
         elif name == 'img':
+            self.img = {}
+            self.misdatos.append(name)
             self.src = attrs.get('src',"")
             self.begin = attrs.get('begin',"")
             self.dur = attrs.get('dur',"")
+            self.img = [self.src,self.region]
+            self.misdatos.append(self.img)
         elif name == 'audio':
+            self.audio = {}
+            self.misdatos.append(name)
             self.src = attrs.get('src',"")
             self.begin = attrs.get('begin',"")
-            self.dur = attrs.get('dur',"") 
+            self.dur = attrs.get('dur',"")
+            self.audio=[self.src,self.begin,self.dur]
+            self.misdatos.append(self.audio) 
         elif name == 'textstream':
+            self.texstream = {}
+            self.misdatos.append(name)
             self.src = attrs.get('src',"")
             self.region = attrs.get('region',"")
-
-    def characters(self, char):
-        """
-        Método para tomar contenido de la etiqueta
-        """
-        if name == 'root_layout':            
-            if self.width:
-                self.width = self.width + char
-            if self.height:
-                self.height = self.height + char
-            if self.background-color:
-                self.background_color = self.background_color + char
-        ###root_layout=['width','height','background-color']
-        if name == 'region':
-            if self.id:
-                self.id= self.id + char
-            if self.top:
-                self.top = self.top + char
-            if self.bottom:
-                self.bottom= self.bottom + char
-            if self.left:
-                self.left = self.left + char
-            if self.right:
-                self.right= self.right + char
-        ###region=['id','top','bottom','left','rigth']
-        if name == 'img':
-            if self.src:
-                self.src = self.src + char
-            if self.region:
-                self.region=self.region + char
-            if self.begin:
-                self.begin = self.begin + char
-            if self.dur:
-                self.dur= self.dur + char
-        ###img=['src','region','begin','dur']
-        if name == 'audio':
-            if self.src:
-                self.src = self.src + char 
-            if self.begin:
-                self.begin = self.begin + char
-            if self.dur:
-                self.dur= self.dur + char
-        ###audio=['src','begin','dur']
-        if name == 'texstream':
-            if self.src:
-                self.src = self.src + char
-            if self.region:
-                self.region=self.region + char
-        ###texstream = ['src','region']
-        misdatos ={'root_layout': ['width','height','background-color'], 
-'region': ['id','top','bottom','left','rigth'], 'img': 
-['src','region','begin','dur'], 'audio': ['src','begin','dur'], 
-'textstream': ['src','region'],}
-    def get_tags(self):
+            self.texstream = [self.src,self.region]
+            self.misdatos.append(self.texstream)
         """
         Metodo para guardar los contenidos del texto e imprimirlos por pantalla
         """
         #Creamos un array que contenga los datos y los guarde.(metodo anterior)
+    def get_tags(self):
+       
+        print (self.misdatos)
         return self.misdatos
         # y luego los imprime.
-        print (self.misdatos)
+if __name__ == "__main__":
+    """
+    Programa principal
+    """
+    parser = make_parser()
+    cHandler = SmallSMILHandler()
+    parser.setContentHandler(cHandler)
+    parser.parse(open('karaoke.smil'))
+
+    cHandler.get_tags()
+    # hago cosas con mis datos
