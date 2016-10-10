@@ -7,14 +7,31 @@ from xml.sax.handler import ContentHandler
 from smallsmilhandler import SmallSMILHandler
 import sys
 import csv
+import json
+
+
+def lista_etiquetas(misdatos):
+   
+    for sublista in misdatos:
+        etiquetas = sublista[0]
+        atributos = sublista[1]
+        resultado = str(etiquetas + '\t')        
+        for clave in atributos:
+            if atributos[clave]:
+                  resultado = resultado + (str(clave + '="' + atributos[clave] 
++ '"' + '\n'))
+        print(resultado)    
 
 if __name__ == "__main__":
+
+    
     """
     Programa principal
     nos haremos servir del main de samallamilshandler, que tiene ya todo creado,
     asi solo tendremos que coger el archivo para leerlo-->para ello tendremos
     que tener en cuenta el importar sys
     """
+    
     #Tratamos de leer el archivo que se nos pase
     try:
         """
@@ -23,7 +40,7 @@ if __name__ == "__main__":
         que importamos anteriormente.y como hicimos en el programa de calcplus,
         fichero = sys.argv[1] utilizaremos el mismo metodo.
         """
-        Archivo = sys.argv[1]
+        Archivo = open(sys.argv[1])
         """
         Ahora el programa nos dice que tenemos que tener en cuenta que hay 
         que especificar el fichero, asi que tendra que saltar un mensaje de
@@ -31,12 +48,12 @@ if __name__ == "__main__":
         """
     except IndexError:
         sys.exit("Usege: python3 karaoke.py file.smil")
-        #return 'Usege: python3 karaoke.py file.smil'
-
+        #return 'Usege: python3 karaoke.py file.smil'   
+ 
     parser = make_parser()
-    sHandler = SmallSMILHandler()
+    sHandler =SmallSMILHandler()
     parser.setContentHandler(sHandler)
-    parser.parse(open(Archivo)) #tendrá que abrir cualquier archivo
-
+    parser.parse(Archivo)
     sHandler.get_tags()
-    # hago cosas con mis datos (los imprimo por pantalla, mediante el metodo)
+    
+    
